@@ -16,6 +16,7 @@ The password reset functionality contains logical flaws that allow attackers to 
 # Result
 * Account takeover acieved without owning the victim;s email
 
+
 # Weakness 
 * Server trust client-side parameters
 * Missing strict validation of reset tokens
@@ -25,4 +26,4 @@ The password reset functionality contains logical flaws that allow attackers to 
  * Specific user
  * Single session
  * Short expiration time
-2. Valid token server-side only
+2. Valid token server-side only 

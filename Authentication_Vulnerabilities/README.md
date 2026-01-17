@@ -6,4 +6,8 @@ This repo documents practical exploitation of authentication related vulnerabili
 * Username Enumeration
 * Password reset flaws
 * Weak 2FA logics
+* Broken brute-force protection IP block
+* Password reset poisoning via middleware
+* Password Reset Broken Logic
+
 
