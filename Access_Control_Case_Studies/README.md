@@ -1,4 +1,4 @@
-# Access control Vulnerabilities - Portswigger Labs Write-Ups
+# Access control case studies 
 
 This repo documents practical exploitation of access control related vulnerabilities using PortSwigger Web Security Academy labs.
 
