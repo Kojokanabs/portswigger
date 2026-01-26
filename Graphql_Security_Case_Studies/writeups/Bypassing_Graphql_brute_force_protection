@@ -1,0 +1,33 @@
+# Description
+The login functionality is implemented using a GraphQL API with rate-limiting protections.
+However, the API allows multiple login attempts within a single request by abusing GtaphQL aliases, enabling brute-force attacks despite the limiter.
+
+# Lab Setup
+* Platform: PortSwigger Web Security Academy
+* Lab: Bypassing GraphQL brute force protections
+* Target: GraphQL login mutation
+* Goal: Authenticate as a user "carlos"
+
+# Exploitation Steps(Python-based approach)
+1.Intercept a login request to identify the GraphQL endpoint
+2. Save GraphQL queries to the Burp Suite site map
+3. Send the login mutation to Burp Suite Repeater
+4. Generate aliased login mutations using a Python script
+5. Send the combined mutation to bypass brute-force protection
+6. Identify the successful login user 
+
+# Result
+* One aliased mutation returned success: true
+* Valid credentials for a user were identified 
+* Successfully logged in
+
+# Weakness 
+* Rate limiting is applied per request, not per operation
+* GraphQL aliases allow multiple authentication attempts in single request
+
+# Weakness
+* Apply rate limiting per mutation, not per request
+* Restrict or disable aliases on sensitive operations
+* Add account-based lockout and anomaly detection
+* Enforce strict authentication attempt thresholds
+
