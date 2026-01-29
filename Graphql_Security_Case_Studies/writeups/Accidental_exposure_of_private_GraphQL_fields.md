@@ -1,27 +1,34 @@
+Accidental Exposure of Private GraphQL fields
+ 
 # Description
 The GraphQL API unintentionally exposes sensitive user credential fields
 Attacker can induce the API to return confidential data due to improper access control.
 
-# Lab Setup
-* Platform: PortSwigger Web Security Academy
-* Lab: Accidental exposure of private GraphQL fields
+# Testing Context:
+* Plaform: PortSwigger Web Security Academy
+* Scenario: Accidental exposure of private GraphQL fields
 * Target: GraphQL user management endpoint
 
 # Exploitation Steps 
-1. LOng in as an administrator
+1. Authenticate as a privildge user
 2. Intercept GraphQL queries related to user managememt 
 3. Modify queries to request sensitve credential fields 
-4. Extract exposed data and perform priviledge actions
+4. Extract exposed data and perform unauthorized priviledge actions
 
-# Result
-* Private credentials fields were dosclosed 
-* Adminstrative privileges were abused to delete user carlos  
+# Security Impact
+* Disclosure of sensitive credential-related fields 
+* Abuse of administrative functionality
+* Risk of account compromise and data integrity loss  
 
-# Weakness
-* Overly persissive GraphQL schema
-* Sensitive fields not properly restricted
+# Root-Cause-Analysis
+* Overly permissive GraphQL schema
+* Missing field-level authorization controls
 
-# MItigation
-* Limit GraphQL filed exposure using strict schema design
-* Apply role-based access control to sensitive fields
+# Secure-by-Design MItigations
+* Restrict sensitive fields using explicit schema allowlist
+* Enforce field-level authorization based on user roles
+* Apply deny-by-default access control for GraphQL fields
+
+# OWASP Mapping
+* AO1- Broken Access Control
  

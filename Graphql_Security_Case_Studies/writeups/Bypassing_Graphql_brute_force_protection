@@ -1,33 +1,44 @@
-# Description
-The login functionality is implemented using a GraphQL API with rate-limiting protections.
-However, the API allows multiple login attempts within a single request by abusing GtaphQL aliases, enabling brute-force attacks despite the limiter.
+Bypassing_Graphql_brute_force_protection
 
-# Lab Setup
+# Description
+THe GraghQL API implements rate-limiting controls on authentication requests to prevent brute-force attacks.
+However, the protection is enforced per HTTP request rather than per GraphQLA operation. 
+By abusing GraphQL aliases, attackers can perform multiple login attemps within a single request, effectively bypassing brute-force protections.
+
+# Testing Context:
 * Platform: PortSwigger Web Security Academy
-* Lab: Bypassing GraphQL brute force protections
-* Target: GraphQL login mutation
-* Goal: Authenticate as a user "carlos"
+* Scenario: Bypassing GraphQL brute force protections
 
 # Exploitation Steps(Python-based approach)
-1.Intercept a login request to identify the GraphQL endpoint
-2. Save GraphQL queries to the Burp Suite site map
-3. Send the login mutation to Burp Suite Repeater
-4. Generate aliased login mutations using a Python script
-5. Send the combined mutation to bypass brute-force protection
-6. Identify the successful login user 
+1. Intercept a GraphQL login request using burp Suite.
+2. Identify the authentication mutation used for login.
+3. Generate multiple aliased login mutations, each containing different credentials.
+4. Combine aliased mutations into a single GraphQL reqiest(using python script)
+5. Send the request to the GraphQL endpoint
+6. Observe the response to identify a successful authentication attempt 
 
-# Result
-* One aliased mutation returned success: true
-* Valid credentials for a user were identified 
-* Successfully logged in
+# Security Impact
+* Bypass of authentication rate-limiting controls
+* Enables large-scale brute-force attacks
+* Increased risk of account takeover 
+* Compromises the effectiveness of authentication security controls
 
-# Weakness 
-* Rate limiting is applied per request, not per operation
-* GraphQL aliases allow multiple authentication attempts in single request
+# Root Cause Analysis 
+* Rate limiting is applied at HTTP request level instead of the GraphQL resolver level
+* Authentication logic does not account fpr GraphQL features such as aliases.
+* Security controls are designed with REST assumptions and reused for GraphQL APIs without proper threat modeling.
 
-# Weakness
-* Apply rate limiting per mutation, not per request
-* Restrict or disable aliases on sensitive operations
-* Add account-based lockout and anomaly detection
-* Enforce strict authentication attempt thresholds
+# Why Automated Tools Often Miss This
+* The vulnerability is logic based rather than injection-based
+* Requires crafting aliased GraphQL mutations to trigger
+* Automated scanners typically treat a GraphQL request as a single authentication attempt.
+ 
+# Secure-by-Design Mitigations
+* Apply rate limiting per resolver or per authentication attempt mutation.
+* Restrict or disable GraphQL aliases on sensitive mutations such as login
+* Implement account-based lockout and behavioral anomaly detection
+* Design authentication controls with GraphQL-specific threat models
 
+# OWASP Mapping
+* OWASP API Top 10:API2 - Broken Authentication
+* OWASP Top 10:AO7 - Identification and Authntication Failures 
