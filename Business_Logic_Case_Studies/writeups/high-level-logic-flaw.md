@@ -1,29 +1,46 @@
 # High-level logic flaw
 
 # Description
-The application enforces individual checks correctly but fails to consider the overall business logic
-Attackers can exploit this gap to achieve unintended outcomes
+The application enforces individual validation checks but fails to reason with overall business logic
 
-# Lab Setup
+By exploitingmassumptions in how diffrent actions are combined or ordered, and attacker can manipulate the application into reaching outcomes that violate the intended business logic, despite all individual checks passing.
+
+# Testing Context
 * Platform: PortSwigger Web Security Academy
-* Lab: High-level logic flaw
+* Senarios: High-level logic flaw
 * Target: Application workflow
 
-* Exploitation Steps
-1 Understand the intended business workflow
-2 Identify assumptions made by the application
-3 Manipulate the order or combination of actions
-4 Achieve a result that violate business intent 
+# Exploitation Steps
+1 Understand the intended business workflow and extended constrainsts
+2 Identify implicit assumptions made by the application logic
+3 Manipulate the order, timing or combination of actions
+4 Achieve an outcome that violate the intended business rules 
 
-# Result 
-* Application behavior deviated from intended logic 
-* Business contrainsts were bypassed 
+# Security Impact
+* Bypass of high-level business constraints
+* Unauthorized or uninteded application states
+* Financial loss, policy violations, or abuse of functionality
+* Reduced confidence in the correctness of business enforcement 
 
-# Weakness
-* Incomplete modeling of business logic
-* Lack of holistic validation
+# Root Cause Analysis
+* Buniness logic is validated at a step level, not at a workflow level
+* The application does not verify whether final outcomes align with business intent
+* Threat modeling focuses on individual rather than end-to-end flows
+* Assumptions about user behavior are embedded into the logic.
 
-# Mitigation
-* Threat-model business workflows 
-* Validate outcomes, not just individual steps
-                               
+# Why Automated Tools Often Miss This
+* The vulnerability is entirely logic-based
+* Expliotation requires understanding business intent, not malformed input
+* Automated scanners lack awareness of valid vs invalid workflow outcomes
+* Tools test endpoints independently instead of evaluating end-state correctness
+
+# Secure-by-Design Mitigations
+* Threat-model complete business workflows, not just individaul actions
+* Validate final outcomes against business rules and invariants 
+* Enforce state consistentcy across multi-step processes
+* Design workflows assuming adversarial sequencing of valid actions
+* Implement centralized business rule engines where feasible 
+
+# OWASP Mapping
+* OWASP Top 10:A04 - Insure Design
+* OWASP tOP 10:A01 - Broken Access Control                               
